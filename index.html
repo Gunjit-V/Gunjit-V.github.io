@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gunjit Valechha</title>
+  <meta name="description" content="Portfolio of Gunjit Valechha" />
+  <meta name="author" content="Gunjit Valechha" />
+  <meta property="og:title" content="Gunjit Valechha" />
+  <meta property="og:description" content="Portfolio of Gunjit Valechha" />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.88em' font-size='90'>▸</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="shell">
+
+    <!-- Header -->
+    <header class="header">
+      <div class="header__left">
+        <div class="dots" aria-hidden="true">
+          <span class="dot dot--r"></span>
+          <span class="dot dot--y"></span>
+          <span class="dot dot--g"></span>
+        </div>
+        <span class="header__path">> gunjit/portfolio</span>
+      </div>
+      <nav class="tabs" id="tabs" role="tablist">
+        <button class="tab active" data-sec="about" role="tab" aria-selected="true">about</button>
+        <button class="tab" data-sec="experience" role="tab" aria-selected="false">experience</button>
+        <button class="tab" data-sec="projects" role="tab" aria-selected="false">projects</button>
+        <button class="tab" data-sec="skills" role="tab" aria-selected="false">skills</button>
+        <button class="tab" data-sec="education" role="tab" aria-selected="false">education</button>
+        <button class="tab" data-sec="contact" role="tab" aria-selected="false">contact</button>
+      </nav>
+    </header>
+
+    <!-- Content -->
+    <main class="viewport" id="viewport">
+
+      <!-- ───── ABOUT ───── -->
+      <section class="pane active" id="pane-about" role="tabpanel">
+        <div class="prompt-row"><span class="ps1">~</span><span class="cmd">whoami</span></div>
+
+        <div class="block intro">
+          <h1 class="intro__name">Gunjit Valechha</h1>
+          <p class="intro__role">Data Engineer · HDFC Bank</p>
+          <div class="intro__links">
+            <a href="mailto:gunjitvalechha25@gmail.com" class="link-pill" id="link-email">gunjitvalechha25@gmail.com</a>
+            <a href="https://linkedin.com/in/gunjit-v" target="_blank" rel="noopener" class="link-pill" id="link-linkedin">linkedin ↗</a>
+            <a href="https://github.com/Gunjit-V" target="_blank" rel="noopener" class="link-pill" id="link-github">github ↗</a>
+          </div>
+        </div>
+
+        <div class="block">
+          <p class="body-text">Data Engineer with 3+ years of experience building scalable data platforms, lakehouse architectures, and real-time streaming systems at India's largest private bank.</p>
+          <p class="body-text">I design robust ELT/ETL pipelines, optimize big-data workloads, and deliver self-serve analytics platforms — turning messy data into clean, production-grade systems.</p>
+          <p class="body-text dim">NIT Warangal '23 · Institute Merit Scholar</p>
+        </div>
+
+        <div class="meta-row">
+          <span class="meta-chip"><span class="meta-key">location</span> India</span>
+          <span class="meta-chip"><span class="meta-key">experience</span> 3+ yrs</span>
+          <span class="meta-chip"><span class="meta-key">status</span> <span class="dot-live"></span>open to opportunities</span>
+        </div>
+      </section>
+
+      <!-- ───── EXPERIENCE ───── -->
+      <section class="pane" id="pane-experience" role="tabpanel">
+        <div class="prompt-row"><span class="ps1">~</span><span class="cmd">cat experience.log</span></div>
+
+        <div class="timeline">
+
+          <div class="block xp">
+            <div class="xp__head">
+              <div>
+                <h2 class="xp__company">HDFC Bank</h2>
+                <span class="xp__title">Data Engineer</span>
+              </div>
+              <time class="xp__date">Jul 2023 — Present</time>
+            </div>
+
+            <!-- project 1 -->
+            <details class="xp__project" name="xp-project" open>
+              <summary class="xp__project-name">
+                Lakehouse Platform
+                <span class="xp__tech">Python · SQL · Airflow · Trino</span>
+              </summary>
+              <ul class="xp__list">
+                <li>Built the in-house <em>Master Data Management (MDM)</em> platform from scratch, eliminating third-party vendor dependency and delivering significant licensing cost savings. <mark>Silver Star Award</mark></li>
+                <li>Designed scalable, normalized data models and custom Airflow DAGs to ingest large-scale Excel (&gt;100K rows) and CSV sources with zero data loss.</li>
+                <li>Built reusable Python libraries for data validation and schema enforcement, standardizing ingestion patterns across teams.</li>
+                <li>Implemented failure monitoring and automated email alerting, reducing MTTR for production incidents.</li>
+                <li>Migrated legacy workloads to optimized Lakehouse tables (Parquet/Delta), improving query performance and reducing maintenance overhead.</li>
+              </ul>
+            </details>
+
+            <!-- project 2 -->
+            <details class="xp__project" name="xp-project">
+              <summary class="xp__project-name">
+                Industry Analytics Platform
+                <span class="xp__tech">Python · PySpark · SQL · Selenium · Azure Databricks</span>
+              </summary>
+              <ul class="xp__list">
+                <li>Designed automated web scraping pipelines for 50+ heterogeneous data sources, extracting structured data from HTML, PDF, Excel, CSV, and plain text.</li>
+                <li>Managed production deployments via Azure DevOps CI/CD with automated testing gates and zero-downtime releases.</li>
+                <li>Created analytical views for self-serve analytics, eliminating engineering intervention for cross-functional stakeholders.</li>
+                <li>Hardened Azure VMs by remediating critical security vulnerabilities, achieving full audit readiness.</li>
+              </ul>
+            </details>
+
+            <!-- project 3 -->
+            <details class="xp__project" name="xp-project">
+              <summary class="xp__project-name">
+                Loan Products Data Platform
+                <span class="xp__tech">Python · PySpark · SQL · Azure Databricks</span>
+              </summary>
+              <ul class="xp__list">
+                <li>Owned end-to-end ELT pipeline for 100,000+ customer records across Xpress Car Loan, Personal Loan, and Business Loan product lines.</li>
+                <li>Automated development steps via templated Databricks notebooks, reducing pipeline development time by ~80%.</li>
+                <li>Optimized Databricks workflow configurations (cluster sizing, pooling), cutting pipeline runtime by ~20% and reducing compute costs.</li>
+                <li>Resolved production incidents with root-cause analysis documentation and established runbooks to prevent recurrence.</li>
+              </ul>
+            </details>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ───── PROJECTS ───── -->
+      <section class="pane" id="pane-projects" role="tabpanel">
+        <div class="prompt-row"><span class="ps1">~</span><span class="cmd">ls projects/</span></div>
+
+        <div class="block proj">
+          <div class="proj__head">
+            <h2 class="proj__name"><span class="dot-live"></span>Algorithmic Trading Dashboard</h2>
+            <a href="https://github.com/Gunjit-V/Market-Dashboard" target="_blank" rel="noopener" class="link-pill sm" id="proj-github">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+              source
+            </a>
+          </div>
+          <div class="tag-row">
+            <span class="tag">Python</span>
+            <span class="tag">FastAPI</span>
+            <span class="tag">PostgreSQL</span>
+            <span class="tag">React</span>
+            <span class="tag">TypeScript</span>
+            <span class="tag">AsyncIO</span>
+          </div>
+          <ul class="proj__list">
+            <li>Real-time market data streaming platform using FastAPI and PostgreSQL to ingest, store, and serve tick-level financial data for futures and options.</li>
+            <li>Event-driven WebSocket server utilizing PostgreSQL LISTEN/NOTIFY for sub-second market updates, eliminating polling overhead.</li>
+            <li>Asynchronous broadcast loop with asyncio and thread pools for concurrent WebSocket connections without blocking.</li>
+            <li>Responsive live-updating dashboard in React &amp; TypeScript with Lightweight Charts for high-frequency price data, order book depth, and custom analytics.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ───── SKILLS ───── -->
+      <section class="pane" id="pane-skills" role="tabpanel">
+        <div class="prompt-row"><span class="ps1">~</span><span class="cmd">cat skills.yml</span></div>
+
+        <div class="skills-list">
+          <div class="block skill-group">
+            <h3 class="skill-group__key">Languages and Tools:</h3>
+            <div class="tag-row">
+              <span class="tag">Python</span><span class="tag">C++</span><span class="tag">SQL</span><span class="tag">PySpark</span><span class="tag">Git</span>
+            </div>
+          </div>
+          <div class="block skill-group">
+            <h3 class="skill-group__key">Big Data and Cloud:</h3>
+            <div class="tag-row">
+              <span class="tag">Apache Spark</span><span class="tag">Apache Airflow</span><span class="tag">Azure Databricks</span><span class="tag">Azure Cloud</span><span class="tag">Trino</span><span class="tag">Pandas</span>
+            </div>
+          </div>
+          <div class="block skill-group">
+            <h3 class="skill-group__key">Data Engineering:</h3>
+            <div class="tag-row">
+              <span class="tag">ELT/ETL Pipeline Design</span><span class="tag">Data Modeling</span><span class="tag">Data Warehousing</span><span class="tag">Lakehouse Architecture</span>
+            </div>
+          </div>
+          <div class="block skill-group">
+            <h3 class="skill-group__key">Web & Backend:</h3>
+            <div class="tag-row">
+              <span class="tag">FastAPI</span><span class="tag">WebSockets</span><span class="tag">PostgreSQL</span>
+            </div>
+          </div>
+          <div class="block skill-group">
+            <h3 class="skill-group__key">CS Fundamentals:</h3>
+            <div class="tag-row">
+              <span class="tag">Low Level Design</span><span class="tag">DSA</span><span class="tag">OOP</span><span class="tag">DBMS</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ───── EDUCATION ───── -->
+      <section class="pane" id="pane-education" role="tabpanel">
+        <div class="prompt-row"><span class="ps1">~</span><span class="cmd">cat education.txt</span></div>
+
+        <div class="block edu">
+          <div class="edu__head">
+            <h2 class="edu__school">National Institute of Technology, Warangal</h2>
+            <time class="edu__date">2019 — 2023</time>
+          </div>
+          <ul class="edu__list">
+            <li><span class="hl">Coursework:</span> Data Structures & Algorithms, Object-Oriented Programming</li>
+            <li>Awarded the <span class="hl">Institute Merit Scholarship</span> for outstanding academic performance</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ───── CONTACT ───── -->
+      <section class="pane" id="pane-contact" role="tabpanel">
+        <div class="prompt-row"><span class="ps1">~</span><span class="cmd">open contact.sh</span></div>
+
+        <div class="contact-cards">
+          <a href="mailto:gunjitvalechha25@gmail.com" class="c-card" id="c-email">
+            <span class="c-card__label">email</span>
+            <span class="c-card__val">gunjitvalechha25@gmail.com</span>
+          </a>
+          <a href="https://linkedin.com/in/gunjit-v" target="_blank" rel="noopener" class="c-card" id="c-linkedin">
+            <span class="c-card__label">linkedin</span>
+            <span class="c-card__val">linkedin.com/in/gunjit-v ↗</span>
+          </a>
+          <a href="https://github.com/Gunjit-V" target="_blank" rel="noopener" class="c-card" id="c-github">
+            <span class="c-card__label">github</span>
+            <span class="c-card__val">github.com/Gunjit-V ↗</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- ───── COMMAND INPUT ───── -->
+      <div class="input-row" id="input-row">
+        <span class="ps1">~</span>
+        <input id="cmd" type="text" class="cmd-field" placeholder="type help for commands…" autocomplete="off" spellcheck="false" aria-label="Terminal command input" />
+      </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="foot">
+      <span>© 2026 Gunjit Valechha</span>
+      <span><span class="dot-live"></span>online</span>
+    </footer>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
