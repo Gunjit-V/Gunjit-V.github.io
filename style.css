@@ -10,9 +10,10 @@
   --border:      #2a2a30;
   --border-sub:  #222228;
 
-  --fg:          #e0e0e6;
-  --fg-2:        #a0a0ac;
-  --fg-3:        #5c5c66;
+  --fg:          #f0f0f4;
+  --fg-2:        #b8b8c4;
+  --fg-3:        #8b8b96;   /* 5.6:1 on --bg — WCAG AA */
+  --fg-4:        #5c5c66;   /* decorative only: bullets, rules */
 
   --accent:      #a78bfa;   /* soft violet */
   --green:       #4ade80;
@@ -217,14 +218,15 @@ body {
 
 .tab.active {
   color: var(--fg);
-  background: var(--bg-raised);
+  background: var(--bg-active);
+  box-shadow: inset 0 -2px 0 var(--accent);
 }
 
 /* ==========================================================
    VIEWPORT (main scrollable area)
    ========================================================== */
 .viewport {
-  padding: 22px 24px 14px;
+  padding: 22px 24px 24px;
   flex: 1;
   overflow-y: auto;
   scrollbar-width: thin;
@@ -269,6 +271,16 @@ body {
 
 @keyframes blink { 50% { opacity: 0; } }
 
+/* Reading measure: long-form bullets cap out around 68ch. The whole
+   column is constrained (not just the text) so rules and headers stop
+   with the content rather than stranding it against a wide window. */
+:root { --measure: 68ch; }
+
+.pane-flat .block,
+.pane-flat .timeline {
+  max-width: var(--measure);
+}
+
 /* ==========================================================
    BLOCKS (shared card-like wrapper)
    ========================================================== */
@@ -278,6 +290,17 @@ body {
   border: 1px solid var(--border-sub);
   border-radius: var(--radius);
   margin-bottom: 12px;
+}
+
+/* One container, not three. The window frame already encloses these
+   panes, so the experience/project/education cards drop their own box
+   and let a hairline rule do the separating. */
+.pane-flat .block {
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  margin-bottom: 0;
 }
 
 /* ==========================================================
@@ -332,10 +355,11 @@ body {
 
 /* Body text */
 .body-text {
-  font-size: .86rem;
+  font-size: .9rem;
   color: var(--fg-2);
-  margin-bottom: 8px;
-  line-height: 1.65;
+  margin-bottom: 10px;
+  line-height: 1.72;
+  max-width: var(--measure);
 }
 
 .body-text:last-child { margin-bottom: 0; }
@@ -393,7 +417,9 @@ body {
   align-items: flex-start;
   flex-wrap: wrap;
   gap: 8px;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
 }
 
 .xp__company {
@@ -417,8 +443,14 @@ body {
 /* Collapsible projects */
 .xp__project {
   border-top: 1px solid var(--border-sub);
-  padding-top: 10px;
-  margin-top: 10px;
+  padding-top: 14px;
+  margin-top: 14px;
+}
+
+.xp__project:first-of-type {
+  border-top: none;
+  padding-top: 0;
+  margin-top: 0;
 }
 
 .xp__project-name {
@@ -466,17 +498,17 @@ body {
 
 .xp__list li {
   position: relative;
-  font-size: .82rem;
+  font-size: .9rem;
   color: var(--fg-2);
-  margin-bottom: 6px;
-  line-height: 1.55;
+  margin-bottom: 10px;
+  line-height: 1.72;
 }
 
 .xp__list li::before {
   content: '–';
   position: absolute;
   left: -14px;
-  color: var(--fg-3);
+  color: var(--fg-4);
 }
 
 .xp__list em,
@@ -497,7 +529,11 @@ body {
   color: var(--yellow);
   padding: 1px 6px;
   border-radius: 3px;
-  font-size: .76rem;
+  font-size: .8rem;
+  /* Keep the award badge on one line — a split pill reads as two
+     stray fragments on narrow screens. */
+  white-space: nowrap;
+  display: inline-block;
 }
 
 /* ==========================================================
@@ -509,7 +545,7 @@ body {
   align-items: center;
   flex-wrap: wrap;
   gap: 8px;
-  margin-bottom: 10px;
+  margin-bottom: 14px;
 }
 
 .proj__name {
@@ -551,17 +587,17 @@ body {
 
 .proj__list li {
   position: relative;
-  font-size: .82rem;
+  font-size: .9rem;
   color: var(--fg-2);
-  margin-bottom: 6px;
-  line-height: 1.55;
+  margin-bottom: 10px;
+  line-height: 1.72;
 }
 
 .proj__list li::before {
   content: '–';
   position: absolute;
   left: -14px;
-  color: var(--fg-3);
+  color: var(--fg-4);
 }
 
 /* ==========================================================
@@ -598,7 +634,9 @@ body {
   align-items: baseline;
   flex-wrap: wrap;
   gap: 8px;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
 }
 
 .edu__school {
@@ -620,17 +658,17 @@ body {
 
 .edu__list li {
   position: relative;
-  font-size: .82rem;
+  font-size: .9rem;
   color: var(--fg-2);
-  margin-bottom: 6px;
-  line-height: 1.55;
+  margin-bottom: 10px;
+  line-height: 1.72;
 }
 
 .edu__list li::before {
   content: '–';
   position: absolute;
   left: -14px;
-  color: var(--fg-3);
+  color: var(--fg-4);
 }
 
 .hl {
@@ -781,7 +819,10 @@ body {
    RESPONSIVE
    ========================================================== */
 @media (max-width: 640px) {
-  html { font-size: 14px; }
+  /* Keep the root at 16px on phones — shrinking it drove body copy to
+     ~12.6px and tab labels to ~10px, which is where legibility goes.
+     Narrow screens get tighter padding instead, not smaller text. */
+  html { font-size: 15.5px; }
 
   body { padding: 0; align-items: flex-start; }
 
@@ -803,9 +844,9 @@ body {
 
   .header { padding: 0 10px; gap: 8px; cursor: default; touch-action: pan-x; }
   .header__path { display: none; }
-  .tab { padding: 5px 8px; font-size: .72rem; }
+  .tab { padding: 7px 9px; font-size: .78rem; }
 
-  .viewport { padding: 16px 14px 10px; }
+  .viewport { padding: 16px 14px 20px; }
 
   .skills-list {
     grid-template-columns: 1fr;
