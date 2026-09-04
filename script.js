@@ -23,7 +23,17 @@
   /* ==========================================================
      CENTER SHELL ON LOAD
      ========================================================== */
+  /* Below this width the stylesheet pins the shell to the full screen,
+     so JS must not write competing inline geometry. */
+  const MOBILE = window.matchMedia('(max-width: 640px)');
+
   function centerShell() {
+    if (MOBILE.matches) {
+      // Clear any inline geometry left over from a desktop-width layout.
+      shell.style.width = shell.style.height = '';
+      shell.style.left  = shell.style.top    = '';
+      return;
+    }
     const vw = window.innerWidth;
     const vh = window.innerHeight;
     const w = Math.min(900, vw - 40);
@@ -37,6 +47,7 @@
   /* Keep the shell inside the viewport after a resize or size change. */
   function clampToViewport() {
     if (shell.classList.contains('is-maximized')) return;
+    if (MOBILE.matches) return;
     const vw = window.innerWidth;
     const vh = window.innerHeight;
     const w  = shell.offsetWidth;
@@ -431,5 +442,11 @@
      WINDOW RESIZE → keep shell in bounds
      ========================================================== */
   window.addEventListener('resize', clampToViewport);
+
+  /* Crossing the mobile breakpoint swaps who owns the geometry:
+     re-center when returning to desktop, clear inline styles going in. */
+  const onBreakpoint = () => centerShell();
+  if (MOBILE.addEventListener) MOBILE.addEventListener('change', onBreakpoint);
+  else MOBILE.addListener(onBreakpoint);
 
 })();

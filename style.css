@@ -41,7 +41,11 @@ body {
   font-family: var(--font-mono);
   background: var(--bg);
   color: var(--fg);
+  /* dvh tracks the *visible* viewport. On mobile, 100vh is the height
+     with the URL bar hidden, so a 100vh shell hangs below the fold
+     until you hold the scroll and the bar retracts. */
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -831,7 +835,8 @@ body {
     /* The base rule caps this at calc(100vw - 32px); undo it so the
        shell actually fills the screen on small viewports. */
     max-width: none !important;
-    height: 100% !important;
+    height: 100vh !important;
+    height: 100dvh !important;
     top: 0 !important;
     left: 0 !important;
     border-radius: 0;
