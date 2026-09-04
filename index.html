@@ -57,8 +57,8 @@
         </div>
 
         <div class="block">
-          <p class="body-text">Data Engineer with 3+ years of experience building scalable data platforms, lakehouse architectures, and real-time streaming systems at India's largest private bank.</p>
-          <p class="body-text">I design robust ELT/ETL pipelines, optimize big-data workloads, and deliver self-serve analytics platforms — turning messy data into clean, production-grade systems.</p>
+          <p class="body-text">Data Engineer with 3+ years of experience building lakehouse platforms, master data management systems, and large-scale ELT pipelines at India's largest private bank.</p>
+          <p class="body-text">I own data platforms end to end — replacing costly vendor tooling with in-house systems, cutting pipeline runtimes, and turning messy sources into governed, production-grade tables that teams can serve themselves.</p>
           <p class="body-text dim">NIT Warangal '23 · Institute Merit Scholar</p>
         </div>
 
@@ -87,15 +87,16 @@
             <!-- project 1 -->
             <details class="xp__project" name="xp-project" open>
               <summary class="xp__project-name">
-                Lakehouse Platform
+                Lakehouse Platform &amp; MDM
                 <span class="xp__tech">Python · SQL · Airflow · Trino</span>
               </summary>
               <ul class="xp__list">
-                <li>Built the in-house <em>Master Data Management (MDM)</em> platform from scratch, eliminating third-party vendor dependency and delivering significant licensing cost savings. <mark>Silver Star Award</mark></li>
-                <li>Designed scalable, normalized data models and custom Airflow DAGs to ingest large-scale Excel (&gt;100K rows) and CSV sources with zero data loss.</li>
-                <li>Built reusable Python libraries for data validation and schema enforcement, standardizing ingestion patterns across teams.</li>
-                <li>Implemented failure monitoring and automated email alerting, reducing MTTR for production incidents.</li>
-                <li>Migrated legacy workloads to optimized Lakehouse tables (Parquet/Delta), improving query performance and reducing maintenance overhead.</li>
+                <li>Enhanced the bank&rsquo;s Lakehouse framework into an in-house <em>Master Data Management</em> platform with dynamic metadata insertion and automated master/reference table creation, eliminating dependency on IBM&rsquo;s MDM solution. <mark>Silver Star Award 2026</mark></li>
+                <li>Designed MDM tables holding <strong>~1M</strong> reference and master-data records, with ingestion validation reconciling source row counts against target tables.</li>
+                <li>Designed target Lakehouse schemas for migrating dimensional data off <em>Netezza</em>, choosing full vs. incremental load strategies from source characteristics and refresh frequency.</li>
+                <li>Built SharePoint integration on the <em>Microsoft Graph API</em> with token-based auth and dynamic retrieval of the latest file(s) per pipeline requirements.</li>
+                <li>Extended ingestion pipelines with custom Excel parsing and transformation logic, using agentic AI coding tools to cut development time by <strong>~60%</strong> and delivering ahead of schedule.</li>
+                <li>Implemented failure monitoring and automated email alerts for Airflow DAGs, notifying developers the moment a pipeline run failed.</li>
               </ul>
             </details>
 
@@ -106,10 +107,10 @@
                 <span class="xp__tech">Python · PySpark · SQL · Selenium · Azure Databricks</span>
               </summary>
               <ul class="xp__list">
-                <li>Designed automated web scraping pipelines for 50+ heterogeneous data sources, extracting structured data from HTML, PDF, Excel, CSV, and plain text.</li>
-                <li>Managed production deployments via Azure DevOps CI/CD with automated testing gates and zero-downtime releases.</li>
-                <li>Created analytical views for self-serve analytics, eliminating engineering intervention for cross-functional stakeholders.</li>
-                <li>Hardened Azure VMs by remediating critical security vulnerabilities, achieving full audit readiness.</li>
+                <li>Delivered an in-house alternative at <strong>INR 36L</strong> against INR 1.6&ndash;2.5 Cr external tooling in 2 months &mdash; <strong>~85% cost savings</strong>, enabling <strong>~INR 1 Cr</strong> in annual revenue through strategic advisory deliverables.</li>
+                <li>Designed and deployed automated web scraping pipelines across <strong>200+</strong> heterogeneous sources, extracting structured data from HTML, PDF, Excel, CSV, and plain text into a centralized store.</li>
+                <li>Developed end-to-end PySpark ETL pipelines and Databricks workflows, creating <strong>200+</strong> warehouse tables used by policy analytics and corporate advisory teams.</li>
+                <li>Managed production deployments via Azure DevOps CI/CD with automated testing gates, ensuring zero-downtime releases and environment parity.</li>
               </ul>
             </details>
 
@@ -120,10 +121,10 @@
                 <span class="xp__tech">Python · PySpark · SQL · Azure Databricks</span>
               </summary>
               <ul class="xp__list">
-                <li>Owned end-to-end ELT pipeline for 100,000+ customer records across Xpress Car Loan, Personal Loan, and Business Loan product lines.</li>
-                <li>Automated development steps via templated Databricks notebooks, reducing pipeline development time by ~80%.</li>
-                <li>Optimized Databricks workflow configurations (cluster sizing, pooling), cutting pipeline runtime by ~20% and reducing compute costs.</li>
-                <li>Resolved production incidents with root-cause analysis documentation and established runbooks to prevent recurrence.</li>
+                <li>Owned end-to-end ELT pipelines for <strong>100,000+</strong> customer records across Xpress Car, Personal, and Business Loan products, onboarding new source systems and building target tables across the loan journey.</li>
+                <li>Built a parameterized Databricks notebook automating onboarding of new API sources from a small set of input parameters, reducing pipeline development time by <strong>~80%</strong>.</li>
+                <li>Optimized Databricks workflows &mdash; Spark version upgrade, cluster memory and autoscaling tuning, cluster pools &mdash; cutting runtime by <strong>~20%</strong> while controlling compute costs.</li>
+                <li>Resolved production failures from source-data and schema drift (datatype changes, unexpected inputs) through root-cause analysis and documented runbooks.</li>
               </ul>
             </details>
           </div>
@@ -150,12 +151,13 @@
             <span class="tag">React</span>
             <span class="tag">TypeScript</span>
             <span class="tag">AsyncIO</span>
+            <span class="tag">Docker</span>
           </div>
           <ul class="proj__list">
-            <li>Real-time market data streaming platform using FastAPI and PostgreSQL to ingest, store, and serve tick-level financial data for futures and options.</li>
-            <li>Event-driven WebSocket server utilizing PostgreSQL LISTEN/NOTIFY for sub-second market updates, eliminating polling overhead.</li>
-            <li>Asynchronous broadcast loop with asyncio and thread pools for concurrent WebSocket connections without blocking.</li>
-            <li>Responsive live-updating dashboard in React &amp; TypeScript with Lightweight Charts for high-frequency price data, order book depth, and custom analytics.</li>
+            <li>Built a real-time market-data ingestion pipeline on the <em>Angel One SmartAPI</em>, normalizing SNAP_QUOTE ticks and batching writes to PostgreSQL with duplicate protection &mdash; persisting LTP, OHLC, volume, open interest, and top-five order-book levels.</li>
+            <li>Implemented an event-driven live dashboard using PostgreSQL <em>LISTEN/NOTIFY</em>, an asynchronous event loop, and WebSocket broadcasting to push database-backed updates to connected browser clients.</li>
+            <li>Developed FastAPI services and a React frontend for instrument discovery, historical OHLCV/tick analysis, volatility views, and ingestion-status monitoring.</li>
+            <li>Containerized PostgreSQL, ingestion, API, dashboard, scheduler, and frontend components with <em>Docker Compose</em> for reproducible local deployment.</li>
           </ul>
         </div>
       </section>
@@ -166,33 +168,39 @@
 
         <div class="skills-list">
           <div class="block skill-group">
-            <h3 class="skill-group__key">Languages and Tools:</h3>
+            <h3 class="skill-group__key">Programming &amp; Querying:</h3>
             <div class="tag-row">
-              <span class="tag">Python</span><span class="tag">C++</span><span class="tag">SQL</span><span class="tag">PySpark</span><span class="tag">Git</span>
-            </div>
-          </div>
-          <div class="block skill-group">
-            <h3 class="skill-group__key">Big Data and Cloud:</h3>
-            <div class="tag-row">
-              <span class="tag">Apache Spark</span><span class="tag">Apache Airflow</span><span class="tag">Azure Databricks</span><span class="tag">Azure Cloud</span><span class="tag">Trino</span><span class="tag">Pandas</span>
+              <span class="tag">Python</span><span class="tag">SQL</span><span class="tag">PySpark</span>
             </div>
           </div>
           <div class="block skill-group">
             <h3 class="skill-group__key">Data Engineering:</h3>
             <div class="tag-row">
-              <span class="tag">ELT/ETL Pipeline Design</span><span class="tag">Data Modeling</span><span class="tag">Data Warehousing</span><span class="tag">Lakehouse Architecture</span>
+              <span class="tag">ETL/ELT</span><span class="tag">Data Pipeline Design</span><span class="tag">Data Modeling</span><span class="tag">Data Warehousing</span><span class="tag">Lakehouse Architecture</span><span class="tag">Data Quality</span><span class="tag">Data Governance</span>
             </div>
           </div>
           <div class="block skill-group">
-            <h3 class="skill-group__key">Web & Backend:</h3>
+            <h3 class="skill-group__key">Big Data &amp; Orchestration:</h3>
             <div class="tag-row">
-              <span class="tag">FastAPI</span><span class="tag">WebSockets</span><span class="tag">PostgreSQL</span>
+              <span class="tag">Apache Spark</span><span class="tag">Apache Airflow</span><span class="tag">Azure Databricks</span><span class="tag">Trino</span>
             </div>
           </div>
           <div class="block skill-group">
-            <h3 class="skill-group__key">CS Fundamentals:</h3>
+            <h3 class="skill-group__key">Cloud &amp; DevOps:</h3>
             <div class="tag-row">
-              <span class="tag">Low Level Design</span><span class="tag">DSA</span><span class="tag">OOP</span><span class="tag">DBMS</span>
+              <span class="tag">Microsoft Azure</span><span class="tag">Azure DevOps</span><span class="tag">Git</span><span class="tag">CI/CD</span><span class="tag">Docker</span>
+            </div>
+          </div>
+          <div class="block skill-group">
+            <h3 class="skill-group__key">Databases &amp; Backend:</h3>
+            <div class="tag-row">
+              <span class="tag">PostgreSQL</span><span class="tag">FastAPI</span><span class="tag">WebSockets</span><span class="tag">AsyncIO</span><span class="tag">Pandas</span>
+            </div>
+          </div>
+          <div class="block skill-group">
+            <h3 class="skill-group__key">Computer Science:</h3>
+            <div class="tag-row">
+              <span class="tag">Object-Oriented Programming</span><span class="tag">Low-Level Design</span><span class="tag">Data Structures &amp; Algorithms</span><span class="tag">DBMS</span>
             </div>
           </div>
         </div>

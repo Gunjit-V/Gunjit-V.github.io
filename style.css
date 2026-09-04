@@ -479,9 +479,17 @@ body {
   color: var(--fg-3);
 }
 
-.xp__list em {
+.xp__list em,
+.proj__list em {
   font-style: normal;
   color: var(--fg);
+}
+
+/* Quantified results — the numbers recruiters scan for. */
+.xp__list strong,
+.proj__list strong {
+  font-weight: 500;
+  color: var(--cyan);
 }
 
 .xp__list mark {
