@@ -34,6 +34,18 @@
     shell.style.top    = Math.max(0, (vh - h) / 2) + 'px';
   }
 
+  /* Keep the shell inside the viewport after a resize or size change. */
+  function clampToViewport() {
+    if (shell.classList.contains('is-maximized')) return;
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    const w  = shell.offsetWidth;
+    const h  = shell.offsetHeight;
+
+    if (shell.offsetLeft + w > vw) shell.style.left = Math.max(0, vw - w) + 'px';
+    if (shell.offsetTop  + h > vh) shell.style.top  = Math.max(0, vh - h) + 'px';
+  }
+
   centerShell();
 
   /* ==========================================================
@@ -42,39 +54,50 @@
   let isDragging = false;
   let dragStartX, dragStartY, shellStartX, shellStartY;
 
-  header.addEventListener('mousedown', e => {
+  let dragPointerId = null;
+
+  header.addEventListener('pointerdown', e => {
     // Don't drag when clicking on tabs, dots, or interactive elements
     if (e.target.closest('.tab, .dots, a, button, input')) return;
     if (shell.classList.contains('is-maximized')) return;
+    if (e.button !== 0 && e.pointerType === 'mouse') return;
 
     isDragging = true;
+    dragPointerId = e.pointerId;
     shell.classList.add('is-dragging');
     dragStartX = e.clientX;
     dragStartY = e.clientY;
     shellStartX = shell.offsetLeft;
     shellStartY = shell.offsetTop;
+    header.setPointerCapture(e.pointerId);
     e.preventDefault();
   });
 
-  document.addEventListener('mousemove', e => {
-    if (!isDragging) return;
+  header.addEventListener('pointermove', e => {
+    if (!isDragging || e.pointerId !== dragPointerId) return;
     const dx = e.clientX - dragStartX;
     const dy = e.clientY - dragStartY;
     shell.style.left = (shellStartX + dx) + 'px';
     shell.style.top  = (shellStartY + dy) + 'px';
   });
 
-  document.addEventListener('mouseup', () => {
-    if (isDragging) {
-      isDragging = false;
-      shell.classList.remove('is-dragging');
-    }
-  });
+  function endDrag(e) {
+    if (!isDragging || e.pointerId !== dragPointerId) return;
+    isDragging = false;
+    dragPointerId = null;
+    shell.classList.remove('is-dragging');
+    if (header.hasPointerCapture(e.pointerId)) header.releasePointerCapture(e.pointerId);
+  }
+
+  header.addEventListener('pointerup', endDrag);
+  header.addEventListener('pointercancel', endDrag);
 
   /* ==========================================================
      DOUBLE-CLICK TITLE BAR → MAXIMIZE / RESTORE
      ========================================================== */
   let preMaxBounds = null;
+  let preMinBounds = null;
+  let preCollapseHeight = null;
 
   header.addEventListener('dblclick', e => {
     if (e.target.closest('.tab, .dots, a, button, input')) return;
@@ -113,12 +136,18 @@
   const MIN_W = 380;
   const MIN_H = 320;
 
-  shell.addEventListener('mousedown', e => {
+  let resizePointerId = null;
+  let resizeHandleEl = null;
+
+  shell.addEventListener('pointerdown', e => {
     const handle = e.target.closest('.resize-handle');
     if (!handle) return;
     if (shell.classList.contains('is-maximized')) return;
+    if (e.button !== 0 && e.pointerType === 'mouse') return;
 
     isResizing = true;
+    resizePointerId = e.pointerId;
+    resizeHandleEl = handle;
     resizeDir  = handle.dataset.dir;
     resStartX  = e.clientX;
     resStartY  = e.clientY;
@@ -129,12 +158,13 @@
       height: shell.offsetHeight,
     };
     shell.classList.add('is-resizing');
+    handle.setPointerCapture(e.pointerId);
     e.preventDefault();
     e.stopPropagation();
   });
 
-  document.addEventListener('mousemove', e => {
-    if (!isResizing) return;
+  shell.addEventListener('pointermove', e => {
+    if (!isResizing || e.pointerId !== resizePointerId) return;
 
     const dx = e.clientX - resStartX;
     const dy = e.clientY - resStartY;
@@ -169,12 +199,19 @@
     shell.style.height = height + 'px';
   });
 
-  document.addEventListener('mouseup', () => {
-    if (isResizing) {
-      isResizing = false;
-      shell.classList.remove('is-resizing');
+  function endResize(e) {
+    if (!isResizing || e.pointerId !== resizePointerId) return;
+    isResizing = false;
+    resizePointerId = null;
+    shell.classList.remove('is-resizing');
+    if (resizeHandleEl && resizeHandleEl.hasPointerCapture(e.pointerId)) {
+      resizeHandleEl.releasePointerCapture(e.pointerId);
     }
-  });
+    resizeHandleEl = null;
+  }
+
+  shell.addEventListener('pointerup', endResize);
+  shell.addEventListener('pointercancel', endResize);
 
   /* ==========================================================
      TRAFFIC LIGHT BUTTONS (functional)
@@ -183,25 +220,42 @@
   const dotYellow = document.querySelector('.dot--y');
   const dotGreen  = document.querySelector('.dot--g');
 
-  // Red dot → shrink to minimum
+  // Red dot → collapse to title bar / restore
   if (dotRed) {
     dotRed.style.cursor = 'pointer';
-    dotRed.title = 'Minimize';
+    dotRed.title = 'Collapse / Restore';
     dotRed.addEventListener('click', () => {
-      shell.style.width  = MIN_W + 'px';
-      shell.style.height = MIN_H + 'px';
+      if (shell.classList.contains('is-collapsed')) {
+        shell.classList.remove('is-collapsed');
+        if (preCollapseHeight) shell.style.height = preCollapseHeight + 'px';
+      } else {
+        if (shell.classList.contains('is-maximized')) toggleMaximize();
+        preCollapseHeight = shell.offsetHeight;
+        shell.style.height = '';
+        shell.classList.add('is-collapsed');
+      }
     });
   }
 
-  // Yellow dot → center in viewport
+  // Yellow dot → minimize (shrink to smallest size) / restore
   if (dotYellow) {
     dotYellow.style.cursor = 'pointer';
-    dotYellow.title = 'Center';
+    dotYellow.title = 'Minimize / Restore';
     dotYellow.addEventListener('click', () => {
-      if (shell.classList.contains('is-maximized')) {
-        shell.classList.remove('is-maximized');
+      if (shell.classList.contains('is-collapsed')) shell.classList.remove('is-collapsed');
+      if (shell.classList.contains('is-maximized')) toggleMaximize();
+
+      const atMin = shell.offsetWidth <= MIN_W && shell.offsetHeight <= MIN_H;
+      if (atMin && preMinBounds) {
+        shell.style.width  = preMinBounds.width + 'px';
+        shell.style.height = preMinBounds.height + 'px';
+        preMinBounds = null;
+      } else {
+        preMinBounds = { width: shell.offsetWidth, height: shell.offsetHeight };
+        shell.style.width  = MIN_W + 'px';
+        shell.style.height = MIN_H + 'px';
       }
-      centerShell();
+      clampToViewport();
     });
   }
 
@@ -215,21 +269,48 @@
   /* ==========================================================
      TAB NAVIGATION
      ========================================================== */
-  function switchTo(id) {
-    tabs.forEach(t => {
+  const tabList = Array.from(tabs);
+
+  function switchTo(id, focusTab) {
+    tabList.forEach(t => {
       const isActive = t.dataset.sec === id;
       t.classList.toggle('active', isActive);
       t.setAttribute('aria-selected', isActive);
+      // Roving tabindex: only the selected tab is in the tab order.
+      t.tabIndex = isActive ? 0 : -1;
+      if (isActive && focusTab) t.focus();
     });
-    panes.forEach(p => p.classList.remove('active'));
+
+    panes.forEach(p => {
+      p.classList.remove('active');
+      p.hidden = true;
+    });
+
     const target = document.getElementById('pane-' + id);
     if (target) {
+      target.hidden = false;
       target.classList.add('active');
       viewport.scrollTop = 0;
     }
   }
 
-  tabs.forEach(t => t.addEventListener('click', () => switchTo(t.dataset.sec)));
+  tabList.forEach(t => t.addEventListener('click', () => switchTo(t.dataset.sec)));
+
+  /* Arrow / Home / End navigation per the ARIA tabs pattern. */
+  document.getElementById('tabs').addEventListener('keydown', e => {
+    const idx = tabList.indexOf(document.activeElement);
+    if (idx === -1) return;
+
+    let next = null;
+    if (e.key === 'ArrowRight') next = (idx + 1) % tabList.length;
+    else if (e.key === 'ArrowLeft') next = (idx - 1 + tabList.length) % tabList.length;
+    else if (e.key === 'Home') next = 0;
+    else if (e.key === 'End') next = tabList.length - 1;
+    else return;
+
+    e.preventDefault();
+    switchTo(tabList[next].dataset.sec, true);
+  });
 
   /* ==========================================================
      COMMAND INTERPRETER
@@ -248,6 +329,8 @@
   whoami       quick bio
   date         current time
   maximize     toggle fullscreen
+  minimize     shrink / restore window
+  collapse     fold to title bar
   center       reset position`,
 
     whoami: () => 'Gunjit Valechha — Data Engineer @ HDFC Bank',
@@ -261,6 +344,8 @@
     },
 
     maximize: () => { toggleMaximize(); return null; },
+    minimize: () => { dotYellow && dotYellow.click(); return null; },
+    collapse: () => { dotRed && dotRed.click(); return null; },
     center:   () => {
       if (shell.classList.contains('is-maximized')) shell.classList.remove('is-maximized');
       centerShell();
@@ -315,28 +400,36 @@
   }
 
   /* ==========================================================
-     GLOBAL KEY → FOCUS INPUT
+     FOOTER YEAR
+     ========================================================== */
+  const yearEl = document.getElementById('year');
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+  /* ==========================================================
+     GLOBAL KEYS
+     - "/" focuses the command input (browser find-in-page is left alone,
+       and no other printable key is hijacked).
+     - Escape blurs it.
      ========================================================== */
   document.addEventListener('keydown', e => {
-    if (!e.ctrlKey && !e.metaKey && !e.altKey && e.key.length === 1 && document.activeElement !== cmdField) {
+    if (!cmdField) return;
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
+
+    const el = document.activeElement;
+    const typingElsewhere =
+      el && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.isContentEditable);
+
+    if (e.key === '/' && !typingElsewhere) {
+      e.preventDefault();
       cmdField.focus();
+    } else if (e.key === 'Escape' && el === cmdField) {
+      cmdField.blur();
     }
   });
 
   /* ==========================================================
      WINDOW RESIZE → keep shell in bounds
      ========================================================== */
-  window.addEventListener('resize', () => {
-    if (shell.classList.contains('is-maximized')) return;
-    const vw = window.innerWidth;
-    const vh = window.innerHeight;
-    const l  = shell.offsetLeft;
-    const t  = shell.offsetTop;
-    const w  = shell.offsetWidth;
-    const h  = shell.offsetHeight;
-
-    if (l + w > vw) shell.style.left = Math.max(0, vw - w) + 'px';
-    if (t + h > vh) shell.style.top  = Math.max(0, vh - h) + 'px';
-  });
+  window.addEventListener('resize', clampToViewport);
 
 })();

@@ -98,10 +98,31 @@ body {
   user-select: none;
 }
 
+/* Collapsed to just the title bar (red traffic light) */
+.shell.is-collapsed {
+  height: auto !important;
+  min-height: 0;
+}
+
+.shell.is-collapsed .viewport,
+.shell.is-collapsed .foot {
+  display: none;
+}
+
+.shell.is-collapsed .resize-handle--n,
+.shell.is-collapsed .resize-handle--s,
+.shell.is-collapsed .resize-handle--ne,
+.shell.is-collapsed .resize-handle--nw,
+.shell.is-collapsed .resize-handle--se,
+.shell.is-collapsed .resize-handle--sw {
+  display: none;
+}
+
 /* ── Resize Handles ── */
 .resize-handle {
   position: absolute;
   z-index: 10;
+  touch-action: none;
 }
 
 .resize-handle--n  { top: -3px; left: 8px; right: 8px; height: 6px; cursor: n-resize; }
@@ -134,6 +155,7 @@ body {
   scrollbar-width: none;
   cursor: grab;
   flex-shrink: 0;
+  touch-action: none;
 }
 
 .header:active { cursor: grabbing; }
@@ -734,6 +756,15 @@ body {
   animation: pane-in .3s var(--ease) both;
 }
 
+/* `hidden` always wins, so the ARIA state and the visual state stay in sync. */
+.pane[hidden] {
+  display: none !important;
+}
+
+.pane:focus-visible {
+  outline: none;
+}
+
 @keyframes pane-in {
   from { opacity: 0; transform: translateY(6px); }
 }
@@ -748,6 +779,9 @@ body {
 
   .shell {
     width: 100% !important;
+    /* The base rule caps this at calc(100vw - 32px); undo it so the
+       shell actually fills the screen on small viewports. */
+    max-width: none !important;
     height: 100% !important;
     top: 0 !important;
     left: 0 !important;
@@ -759,7 +793,7 @@ body {
 
   .resize-handle { display: none; }
 
-  .header { padding: 0 10px; gap: 8px; cursor: default; }
+  .header { padding: 0 10px; gap: 8px; cursor: default; touch-action: pan-x; }
   .header__path { display: none; }
   .tab { padding: 5px 8px; font-size: .72rem; }
 

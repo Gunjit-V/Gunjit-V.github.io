@@ -30,12 +30,12 @@
         <span class="header__path">> gunjit/portfolio</span>
       </div>
       <nav class="tabs" id="tabs" role="tablist">
-        <button class="tab active" data-sec="about" role="tab" aria-selected="true">about</button>
-        <button class="tab" data-sec="experience" role="tab" aria-selected="false">experience</button>
-        <button class="tab" data-sec="projects" role="tab" aria-selected="false">projects</button>
-        <button class="tab" data-sec="skills" role="tab" aria-selected="false">skills</button>
-        <button class="tab" data-sec="education" role="tab" aria-selected="false">education</button>
-        <button class="tab" data-sec="contact" role="tab" aria-selected="false">contact</button>
+        <button class="tab active" id="tab-about" data-sec="about" role="tab" aria-selected="true" aria-controls="pane-about" tabindex="0">about</button>
+        <button class="tab" id="tab-experience" data-sec="experience" role="tab" aria-selected="false" aria-controls="pane-experience" tabindex="-1">experience</button>
+        <button class="tab" id="tab-projects" data-sec="projects" role="tab" aria-selected="false" aria-controls="pane-projects" tabindex="-1">projects</button>
+        <button class="tab" id="tab-skills" data-sec="skills" role="tab" aria-selected="false" aria-controls="pane-skills" tabindex="-1">skills</button>
+        <button class="tab" id="tab-education" data-sec="education" role="tab" aria-selected="false" aria-controls="pane-education" tabindex="-1">education</button>
+        <button class="tab" id="tab-contact" data-sec="contact" role="tab" aria-selected="false" aria-controls="pane-contact" tabindex="-1">contact</button>
       </nav>
     </header>
 
@@ -43,7 +43,7 @@
     <main class="viewport" id="viewport">
 
       <!-- ───── ABOUT ───── -->
-      <section class="pane active" id="pane-about" role="tabpanel">
+      <section class="pane active" id="pane-about" role="tabpanel" aria-labelledby="tab-about" tabindex="0">
         <div class="prompt-row"><span class="ps1">~</span><span class="cmd">whoami</span></div>
 
         <div class="block intro">
@@ -70,7 +70,7 @@
       </section>
 
       <!-- ───── EXPERIENCE ───── -->
-      <section class="pane" id="pane-experience" role="tabpanel">
+      <section class="pane" id="pane-experience" role="tabpanel" aria-labelledby="tab-experience" tabindex="0" hidden>
         <div class="prompt-row"><span class="ps1">~</span><span class="cmd">cat experience.log</span></div>
 
         <div class="timeline">
@@ -132,7 +132,7 @@
       </section>
 
       <!-- ───── PROJECTS ───── -->
-      <section class="pane" id="pane-projects" role="tabpanel">
+      <section class="pane" id="pane-projects" role="tabpanel" aria-labelledby="tab-projects" tabindex="0" hidden>
         <div class="prompt-row"><span class="ps1">~</span><span class="cmd">ls projects/</span></div>
 
         <div class="block proj">
@@ -161,7 +161,7 @@
       </section>
 
       <!-- ───── SKILLS ───── -->
-      <section class="pane" id="pane-skills" role="tabpanel">
+      <section class="pane" id="pane-skills" role="tabpanel" aria-labelledby="tab-skills" tabindex="0" hidden>
         <div class="prompt-row"><span class="ps1">~</span><span class="cmd">cat skills.yml</span></div>
 
         <div class="skills-list">
@@ -199,7 +199,7 @@
       </section>
 
       <!-- ───── EDUCATION ───── -->
-      <section class="pane" id="pane-education" role="tabpanel">
+      <section class="pane" id="pane-education" role="tabpanel" aria-labelledby="tab-education" tabindex="0" hidden>
         <div class="prompt-row"><span class="ps1">~</span><span class="cmd">cat education.txt</span></div>
 
         <div class="block edu">
@@ -215,7 +215,7 @@
       </section>
 
       <!-- ───── CONTACT ───── -->
-      <section class="pane" id="pane-contact" role="tabpanel">
+      <section class="pane" id="pane-contact" role="tabpanel" aria-labelledby="tab-contact" tabindex="0" hidden>
         <div class="prompt-row"><span class="ps1">~</span><span class="cmd">open contact.sh</span></div>
 
         <div class="contact-cards">
@@ -237,14 +237,14 @@
       <!-- ───── COMMAND INPUT ───── -->
       <div class="input-row" id="input-row">
         <span class="ps1">~</span>
-        <input id="cmd" type="text" class="cmd-field" placeholder="type help for commands…" autocomplete="off" spellcheck="false" aria-label="Terminal command input" />
+        <input id="cmd" type="text" class="cmd-field" placeholder="press / then type help for commands…" autocomplete="off" spellcheck="false" aria-label="Terminal command input" />
       </div>
 
     </main>
 
     <!-- Footer -->
     <footer class="foot">
-      <span>© 2026 Gunjit Valechha</span>
+      <span>© <span id="year">2026</span> Gunjit Valechha</span>
       <span><span class="dot-live"></span>online</span>
     </footer>
 
